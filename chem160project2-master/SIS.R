@@ -1,0 +1,33 @@
+alphaf<-.0000009 
+gammaf<-0.007 
+alpham<-0.000006
+gammam<-0.05
+Sm<-14000
+Im<-1000
+Sf<-9000
+If<-1000
+Sm.hist<-c()
+Im.hist<-c()
+Sf.hist<-c()
+If.hist<-c()
+for (timesteps in 1:2000) {
+    Sm.hist[timesteps]<-Sm
+    Im.hist[timesteps]<-Im
+    Sf.hist[timesteps]<-Sf
+    If.hist[timesteps]<-If
+    delta.Sm<-gammam*Im-alpham*Sm*If
+    delta.Im<-alpham*Sm*If-gammam*Im
+    delta.Sf<-gammaf*If-alphaf*Sf*Im
+    delta.If<-alphaf*Sf*Im-gammaf*If
+    Sm<-Sm+delta.Sm
+    Im<-Im+delta.Im
+    Sf<-Sf+delta.Sf
+    If<-If+delta.If
+    Sm<-max(Sm,0) 
+    Im<-max(Im,0)
+    Sf<-max(Sf,0)
+    If<-max(If,0)
+}
+plot(Im.hist,type="l")
+lines(If.hist,col=2)
+
